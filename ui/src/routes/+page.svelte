@@ -51,8 +51,8 @@
   </form>
   
   <!-- Resultados -->
-  <div class="flex flex-row gap-3 justify-center items-center w-full mt-4 px-8"> 
-    <!-- Objetos -->
+  <div class="flex flex-row gap-24 justify-center items-center mt-8 px-8 border border-dashed border-zinc-500 rounded-xl w-[calc(100%-40rem)] h-[35rem]"> 
+    <!-- Objetos -->  
     <div class="left">
       {#if detectedObjects.length > 0}
         <h2 class="font-bold">Objetos detetados</h2>
@@ -62,7 +62,7 @@
           {/each}
         </code>
 
-        <h2 class="font-bold">Desperdício (%)</h2>
+        <h2 class="font-bold mt-3">Desperdício (%)</h2>
         <p class={wastePercentageColor}>{wastePercentage.toFixed(2)}%</p>
       {/if}
 
@@ -70,7 +70,7 @@
     </div>
 
     <!-- Imagem -->
-    <div class="w-[23rem] h-[23rem]">
+    <div class="w-[23rem] h-[30rem]">
       {#if imageBase64}
         <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" />
       {/if}
