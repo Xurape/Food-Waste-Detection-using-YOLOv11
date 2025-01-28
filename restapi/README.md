@@ -28,4 +28,4 @@ pyenv exec fastapi dev main.py
 1. Entrar pelo browser em: http://localhost:8000
 
 > [!TIP]
-Para aceder à **documentação da API**, basta entrar em: http://localhost:8000/docs
+Para aceder à **documentação da API**, basta entrar em: http://localhost:8000/docs ou http://localhost:8000/redoc

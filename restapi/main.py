@@ -1,12 +1,13 @@
 from typing import Union
 from fastapi import FastAPI
 
+from routes import index
+from routes.api import detect
+
 app = FastAPI()
 
-
-@app.get("/")
-def read_root():
-    return
+app.include_router(index.router)
+app.include_router(detect.router, prefix="/api")
 
 
 @app.get("/items/{item_id}")
