@@ -29,3 +29,6 @@ pyenv exec fastapi dev main.py
 
 > [!TIP]
 Para aceder à **documentação da API**, basta entrar em: http://localhost:8000/docs ou http://localhost:8000/redoc
+
+> [!NOTE]
+> Para iniciar o servidor de produção utilize o docker.

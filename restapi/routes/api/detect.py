@@ -28,7 +28,7 @@ async def detect_objects(file: UploadFile = File(...)):
             content={"error": "Error in object detection"}, status_code=500
         )
 
-    # Save the image with detections
+    # Save temporary image with detections
     output_image_path = "output_image.jpg"
     results[0].save(output_image_path)
 
