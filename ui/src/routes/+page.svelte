@@ -4,7 +4,6 @@
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
   import { Toaster } from "$lib/components/ui/sonner";
-	import { LoaderCircle } from 'lucide-svelte';
 	import { toast } from "svelte-sonner";
   import spinner from '$lib/assets/image/loading.svg';
 
