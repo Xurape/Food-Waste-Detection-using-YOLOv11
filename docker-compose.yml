@@ -1,6 +1,6 @@
 services:
   frontend:
-    build: ./frontend
+    build: ./ui
     ports:
       - "3000:4173" 
 
