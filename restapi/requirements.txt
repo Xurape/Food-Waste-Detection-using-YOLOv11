@@ -1,7 +1,9 @@
 fastapi[standard]
-uvicorn
+starlette
 pydantic
 torch
 image
 numpy
 ultralytics
+uvicorn
+gunicorn

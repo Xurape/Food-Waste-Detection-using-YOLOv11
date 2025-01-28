@@ -8,11 +8,7 @@ from routes.api import detect
 app = FastAPI()
 
 # Configure CORS
-origins = [
-    "http://localhost",
-    "http://localhost:4173",
-    "http://localhost:5173",
-]
+origins = ["http://localhost", "http://localhost:4173", "http://localhost:5173", "*"]
 
 app.add_middleware(
     CORSMiddleware,

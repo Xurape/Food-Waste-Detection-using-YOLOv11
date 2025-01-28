@@ -1,4 +1,5 @@
 from ultralytics import YOLO
+import torch
 
 
 class YOLOModel:
@@ -18,7 +19,8 @@ class YOLOModel:
     def predict(self, frame):
         try:
             print("Predicting...")
-            results = self.model(frame)
+            with torch.no_grad():
+                results = self.model(frame)
             detected_objects = []
             for result in results:
                 for box in result.boxes:
@@ -26,7 +28,7 @@ class YOLOModel:
                         {
                             "label": box.cls.item(),
                             "confidence": box.conf.item(),
-                            "box": box.xyxy.tolist(),  # Convert tensor to list
+                            "box": box.xyxy.tolist(),
                         }
                     )
             return detected_objects, results
