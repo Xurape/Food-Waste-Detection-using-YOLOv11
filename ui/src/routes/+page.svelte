@@ -1,8 +1,12 @@
 <script lang="ts">
   // - ui - //
+	import Button from '$lib/components/ui/button/button.svelte';
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
-	import Button from '$lib/components/ui/button/button.svelte';
+  import { Toaster } from "$lib/components/ui/sonner";
+	import { LoaderCircle } from 'lucide-svelte';
+	import { toast } from "svelte-sonner";
+  import spinner from '$lib/assets/image/loading.svg';
 
   // - form data - //
   let imageFile: File | null = null;
@@ -10,6 +14,7 @@
   let imageBase64 = '';
   let wastePercentage = 0;
   let wastePercentageColor = '';
+  let isLoading = false;
 
   // - functions - //
   async function handleSubmit(event: Event) {
@@ -18,6 +23,9 @@
 
     const formData = new FormData();
     formData.append('file', imageFile);
+
+    toast.loading('A processar a imagem...');
+    isLoading = true;
 
     const response = await fetch('http://127.0.0.1:8000/api/detect', {
       method: 'POST',
@@ -36,8 +44,13 @@
     } else {
       wastePercentageColor = 'red';
     }
+
+    toast.success('A imagem foi processada com sucesso!');
+    isLoading = false;
   }
 </script>
+
+<Toaster richColors />
 
 <div class="w-screen h-screen bg-zinc-900 flex justify-center items-center flex-col text-zinc-200 antialiased">
   <h1 class="text-4xl">PROJETO III - JR3 FWD</h1>
@@ -52,28 +65,30 @@
   
   <!-- Resultados -->
   <div class="flex flex-row gap-24 justify-center items-center mt-8 px-8 border border-dashed border-zinc-500 rounded-xl w-[calc(100%-40rem)] h-[35rem]"> 
-    <!-- Objetos -->  
-    <div class="left">
-      {#if detectedObjects.length > 0}
-        <h2 class="font-bold">Objetos detetados</h2>
-        <code>
-          {#each detectedObjects as obj}
-            {obj.label} - {obj.confidence.toFixed(2)}<br/>
-          {/each}
-        </code>
+    {#if isLoading}
+      <img src={spinner} class="w-64 h-64" />
+    {:else}
+      <!-- Objetos -->  
+      <div class="left">
+        {#if detectedObjects.length > 0}
+          <h2 class="font-bold">Objetos detetados</h2>
+          <code>
+            {#each detectedObjects as obj}
+              {obj.label} - {obj.confidence.toFixed(2)}<br/>
+            {/each}
+          </code>
 
-        <h2 class="font-bold mt-3">Desperdício (%)</h2>
-        <p class={wastePercentageColor}>{wastePercentage.toFixed(2)}%</p>
-      {/if}
+          <h2 class="font-bold mt-3">Desperdício (%)</h2>
+          <p class={wastePercentageColor}>{wastePercentage.toFixed(2)}%</p>
+        {/if} 
+      </div>
 
-      
-    </div>
-
-    <!-- Imagem -->
-    <div class="w-[23rem] h-[30rem]">
-      {#if imageBase64}
-        <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" />
-      {/if}
-    </div>
+      <!-- Imagem -->
+      <div class="w-[23rem] h-[30rem]">
+        {#if imageBase64}
+          <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" />
+        {/if}
+      </div>
+    {/if}
   </div> 
 </div>
