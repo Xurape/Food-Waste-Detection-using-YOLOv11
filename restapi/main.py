@@ -8,7 +8,7 @@ from routes.api import detect
 app = FastAPI()
 
 # Configure CORS
-origins = ["https://jr3.joaopferreira.me/"]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
