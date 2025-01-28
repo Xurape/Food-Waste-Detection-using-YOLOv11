@@ -1,32 +1,35 @@
-import torch
-from PIL import Image
-import io
+from ultralytics import YOLO
 
 
-class YOLO:
-    def __init__(self, weights_path: str):
-        self.model = self.load_model(weights_path)
+class YOLOModel:
+    def __init__(self):
+        self.model = self.load_model()
 
-    def load_model(self, weights_path: str):
-        # Load the YOLO model with the given weights
-        model = torch.hub.load("ultralytics/yolov5", "custom", path=weights_path)
-        return model
+    def load_model(self):
+        try:
+            print("Loading YOLO model...")
+            model = YOLO("server/yolo/weights/yolov11-x-weights-v6.pt")
+            print("Model loaded!")
+            return model
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            return None
 
-    def detect_objects(self, image_bytes: bytes):
-        # Convert bytes to PIL Image
-        image = Image.open(io.BytesIO(image_bytes))
-
-        # Perform detection
-        results = self.model(image)
-
-        # Extract results
-        detected_objects = results.pandas().xyxy[0].to_dict(orient="records")
-        return detected_objects
-
-
-# Example usage:
-# detector = YOLODetector('path/to/yolov11-x-weights-v6.pt')
-# with open('path/to/image.jpg', 'rb') as f:
-#     image_bytes = f.read()
-# detections = detector.detect_objects(image_bytes)
-# print(detections)
+    def predict(self, frame):
+        try:
+            print("Predicting...")
+            results = self.model(frame)
+            detected_objects = []
+            for result in results:
+                for box in result.boxes:
+                    detected_objects.append(
+                        {
+                            "label": box.cls.item(),
+                            "confidence": box.conf.item(),
+                            "box": box.xyxy.tolist(),  # Convert tensor to list
+                        }
+                    )
+            return detected_objects, results
+        except Exception as e:
+            print(f"Error predicting: {e}")
+            return None, None

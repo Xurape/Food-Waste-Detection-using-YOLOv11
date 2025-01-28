@@ -1,7 +1,7 @@
-fastapi
 fastapi[standard]
 uvicorn
 pydantic
 torch
 image
 numpy
+ultralytics
