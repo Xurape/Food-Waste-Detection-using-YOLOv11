@@ -3,6 +3,7 @@
   let imageFile: File | null = null;
   let detectedObjects: any[] = [];
   let imageBase64 = '';
+  let wastePercentage = 0;
 
   async function handleSubmit(event: Event) {
     event.preventDefault();
@@ -11,7 +12,7 @@
     const formData = new FormData();
     formData.append('file', imageFile);
 
-    const response = await fetch('/api/detect', {
+    const response = await fetch('http://127.0.0.1:8000/api/detect', {
       method: 'POST',
       body: formData
     });
@@ -19,6 +20,7 @@
     const data = await response.json();
     detectedObjects = data.objects;
     imageBase64 = data.image_base64;
+    wastePercentage = data.waste_percentage;
   }
 </script>
 
@@ -36,6 +38,9 @@
     {/each}
   </ul>
 {/if}
+
+<h2>Waste Percentage</h2>
+<p>{wastePercentage.toFixed(2)}%</p>
 
 {#if imageBase64}
   <h2>Image with Detections</h2>
