@@ -10,6 +10,4 @@ COPY . .
 
 RUN bun run build
 
-EXPOSE 4173
-
-CMD ["bun", "preview"]
+CMD ["bun", "preview", "--host", "0.0.0.0"]

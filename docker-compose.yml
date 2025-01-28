@@ -1,10 +1,10 @@
 services:
-  frontend:
+  ui:
     build: ./ui
     ports:
-      - "3000:4173" 
+      - "4173:4173" 
 
-  backend:
-    build: ./backend
+  restapi:
+    build: ./restapi
     ports:
       - "8000:8000"
