@@ -1,9 +1,11 @@
 # Food waste detection
 
-## Portuguese
-1. Toda a documentação para a UI encontra-se [aqui](./ui/README.md)
-2. Toda a documentação para o backend encontra-se [aqui](./restapi/README.md)
+## Documentation
+- All the documentation for the UI is [here](./ui/README.md)
+- All the documentation for the backend is [here](./restapi/README.md)
 
-## English
-1. All the documentation for the UI is [here](./ui/README.en.md)
-2. All the documentation for the backend is [here](./restapi/README.en.md)
+## Start the project
+To start the project, you need to have docker and docker-compose installed on your machine. Then, you can run the following command:
+```bash
+docker-compose up --build -d
+```

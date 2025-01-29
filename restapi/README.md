@@ -1,34 +1,34 @@
-# RestAPI com FastAPI
+# RestAPI with FastAPI
 
-## Como executar em desenvolvimento (MacOS mas serve para outros SOs)
-1. Criar um virtual environment com python 3.12.0 (ou outra versão compatível)
+## How to run in development (MacOS but applicable to other OS)
+1. Create a virtual environment with Python 3.12.0 (or another compatible version)
 ```bash
 pyenv virtualenv 3.12.0 restapi
 ```
-2. Ativar o ambiente virtual
+2. Activate the virtual environment
 ```bash
 pyenv activate restapi
 ```
-3. Atualizar o pip
+3. Update pip
 ```bash
 pyenv exec pip install --upgrade pip
 ```
-4. Instalar o UV (alternativa ao pip, mais rápida)
+4. Install UV (alternative to pip, faster)
 ```bash
 pyenv exec pip install uv
 ```
-5. Instalar as dependências
+5. Install dependencies
 ```bash
 pyenv exec uv pip install -r requirements.txt --system
 ```
-1. Iniciar o servidor
+6. Start the server
 ```bash
 pyenv exec fastapi dev main.py
 ```
-1. Entrar pelo browser em: http://localhost:8000
+1. Access via browser: http://localhost:8000
 
 > [!TIP]
-> Para aceder à **documentação da API**, basta entrar em: http://localhost:8000/docs ou http://localhost:8000/redoc
+> To acess the **API documentation**, enter http://localhost:8000/docs or http://localhost:8000/redoc via browser.
 
 > [!NOTE]
-> Para iniciar o servidor de produção utilize o docker.
+> To start the production server use docker.

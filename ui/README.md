@@ -1,14 +1,14 @@
 # UI
 
-## Iniciar para desenvolvimento
-1. Instalar dependências
+## Start for development
+1. Install dependencies
 ```bash
 npm install
 ```
-2. Iniciar servidor de desenvolvimento
+2. Start development server
 ```bash
 npm run dev
 ```
 
 > [!NOTE]
-> Para iniciar o servidor de produção utilize o docker.
+> To start the production server use docker.
