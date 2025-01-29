@@ -23,7 +23,7 @@
     const formData = new FormData();
     formData.append('file', imageFile);
 
-    toast.loading('A processar a imagem...');
+    toast.loading('Processing image...');
     isLoading = true;
 
     const response = await fetch('https://jr3-api.joaopferreira.me/api/detect', {
@@ -44,7 +44,7 @@
       wastePercentageColor = 'red';
     }
 
-    toast.success('A imagem foi processada com sucesso!');
+    toast.success('The image was successfuly processed!');
     isLoading = false;
   }
 </script>
@@ -52,14 +52,14 @@
 <Toaster richColors />
 
 <div class="w-screen h-screen bg-zinc-900 flex justify-center items-center flex-col text-zinc-200 antialiased">
-  <h1 class="text-4xl">PROJETO III - JR3 FWD</h1>
+  <h1 class="text-4xl">PROJECT III - Food waste detection in canteen plates</h1>
   <!-- Form -->
   <form on:submit={handleSubmit} class="flex flex-row items-end gap-2 mt-4">
     <div class="grid w-full max-w-sm items-center gap-1.5">
-      <Label for="image">Imagem</Label>
+      <Label for="image">Image</Label>
       <Input id="image" type="file" accept="image/*" on:change={(e) => imageFile = e.target.files[0]} class="text-zinc-900" />
     </div>
-    <Button type="submit" variant="secondary">Detetar</Button>
+    <Button type="submit" variant="secondary">Detect</Button>
   </form>
   
   <!-- Resultados -->
@@ -70,14 +70,14 @@
       <!-- Objetos -->  
       <div class="left">
         {#if detectedObjects.length > 0}
-          <h2 class="font-bold">Objetos detetados</h2>
+          <h2 class="font-bold">Detected objects</h2>
           <code>
             {#each detectedObjects as obj}
               {obj.label} - {obj.confidence.toFixed(2)}<br/>
             {/each}
           </code>
 
-          <h2 class="font-bold mt-3">Desperdício (%)</h2>
+          <h2 class="font-bold mt-3">Waste (%)</h2>
           <p class={wastePercentageColor}>{wastePercentage.toFixed(2)}%</p>
         {/if} 
       </div>
