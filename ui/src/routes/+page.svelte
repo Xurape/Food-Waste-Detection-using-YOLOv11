@@ -3,6 +3,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
   import { Input } from "$lib/components/ui/input/index.js";
   import { Label } from "$lib/components/ui/label/index.js";
+  import { Checkbox } from "$lib/components/ui/checkbox/index.js";
   import { Toaster } from "$lib/components/ui/sonner";
 	import { toast } from "svelte-sonner";
   import spinner from '$lib/assets/image/loading.svg';
@@ -14,19 +15,21 @@
   let wastePercentage = 0;
   let wastePercentageColor = '';
   let isLoading = false;
+  let returnBoundingBoxes = true;
 
   // - functions - //
   async function handleSubmit(event: Event) {
     event.preventDefault();
     if (!imageFile) return;
 
+    isLoading = true;
     const formData = new FormData();
     formData.append('file', imageFile);
 
     toast.loading('Processing image...');
-    isLoading = true;
 
-    const response = await fetch('https://jr3-api.joaopferreira.me/api/detect', {
+    // const response = await fetch(`https://jr3-api.joaopferreira.me/api/detect?return_bounding_boxes=${returnBoundingBoxes}`, {
+    const response = await fetch(`http://localhost:8000/api/detect?return_bounding_boxes=${returnBoundingBoxes}`, {
       method: 'POST',
       body: formData
     });
@@ -47,6 +50,10 @@
     toast.success('The image was successfuly processed!');
     isLoading = false;
   }
+
+  function toggleSegmentation() {
+    returnBoundingBoxes = !returnBoundingBoxes;
+  }
 </script>
 
 <Toaster richColors />
@@ -58,6 +65,18 @@
     <div class="grid w-full max-w-sm items-center gap-1.5">
       <Label for="image">Image</Label>
       <Input id="image" type="file" accept="image/*" on:change={(e) => imageFile = e.target.files[0]} class="text-zinc-900" />
+
+      <!-- checkbox -->
+      <div class="flex items-center space-x-2">
+        <Checkbox id="returnBoundingBoxes" bind:checked={returnBoundingBoxes} aria-labelledby="returnBounding" />
+        <Label
+          id="returnBounding"
+          for="returnBoundingBoxes"
+          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Return bounding boxes?
+        </Label>
+      </div>
     </div>
     <Button type="submit" variant="secondary">Detect</Button>
   </form>
