@@ -16,34 +16,6 @@ class YOLOModel:
             print(f"Error loading model: {e}")
             return None
 
-    # def predict(self, frame):
-    #     try:
-    #         print("Predicting...")
-    #         with torch.no_grad():
-    #             results = self.model(frame)
-    #         detected_objects = []
-    #         for result in results:
-    #             for i, (mask, box) in enumerate(zip(result.masks.data, result.boxes)):
-    #                 if box.cls.item() == 58.0:
-    #                     # calculate area of the box
-    #                     area = box.xyxy.tolist()[0]
-    #                     area = (area[2] - area[0]) * (area[3] - area[1])
-    #                 else:
-    #                     area = mask.sum().item()
-    #                 detected_objects.append(
-    #                     {
-    #                         "label": box.cls.item(),
-    #                         "confidence": box.conf.item(),
-    #                         "box": box.xyxy.tolist(),
-    #                         "area": area,
-    #                     }
-    #                 )
-
-    #         return detected_objects, results
-    #     except Exception as e:
-    #         print(f"Error predicting: {e}")
-    #         return None, None
-
     def predict(self, frame):
         try:
             print("Predicting...")
@@ -52,7 +24,7 @@ class YOLOModel:
             detected_objects = []
             for result in results:
                 for i, (mask, box) in enumerate(zip(result.masks.data, result.boxes)):
-                    area = mask.sum().item()  # Use segmentation mask for all objects
+                    area = mask.sum().item()
                     detected_objects.append(
                         {
                             "label": box.cls.item(),
