@@ -2,19 +2,12 @@ from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from server.yolo.yolo import YOLOModel
 from PIL import Image
+import torch
 import io
 import base64
 
 router = APIRouter()
 yolo_model = YOLOModel()
-
-label_map = {
-    58.0: "plate",
-    63.0: "garbage",
-    35.0: "knife",
-    20.0: "fork",
-    21.0: "cup",
-}
 
 
 @router.post("/detect")
@@ -37,57 +30,34 @@ async def detect_objects(file: UploadFile = File(...)):
         base64_image = base64.b64encode(image_file.read()).decode("utf-8")
 
     # Calculate waste percentage
+    garbage_classes = {35.0, 31.0, 42.0}
+
     plate_area = 0
-    waste_area = 0
-    total_food_area = 0
-    waste_classes = {"garbage", "knife", "fork", "cup"}
+    garbage_area = 0
+    food_area = 0
 
     for obj in detected_objects:
-        numeric_label = obj["label"]
-        label = label_map.get(numeric_label, "unknown")
-        box = obj["box"]
+        print(f"Detected object: {obj}")
+        if obj["label"] == 58.0:
+            plate_area += obj["area"]
 
-        print(f"Detected object: {label} with box: {box}")
+        if obj["label"] in garbage_classes:
+            garbage_area += obj["area"]
 
-        if len(box) != 1 or len(box[0]) != 4:
-            print(f"Unexpected box format: {box}")
-            continue
+        if obj["label"] not in garbage_classes and obj["label"] != 58.0:
+            food_area += obj["area"]
 
-        box = box[0]
+    print(f"Plate area: {plate_area}")
+    print(f"Garbage area: {garbage_area}")
+    print(f"Food area: {food_area}")
 
-        if label == "plate":
-            plate_area = (box[2] - box[0]) * (box[3] - box[1])
-            print(f"Plate area: {plate_area}")
-            break
+    if plate_area > garbage_area:
+        waste_percentage = ((food_area - garbage_area) / plate_area * 0.8) * 100
+    else:
+        waste_percentage = 0
 
-    if plate_area == 0:
-        return JSONResponse(content={"error": "Plate not detected"}, status_code=400)
-
-    for obj in detected_objects:
-        numeric_label = obj["label"]
-        label = label_map.get(numeric_label, "unknown")
-        box = obj["box"]
-
-        if len(box) != 1 or len(box[0]) != 4:
-            print(f"Unexpected box format: {box}")
-            continue
-
-        box = box[0]
-
-        if label in waste_classes:
-            box_area = (box[2] - box[0]) * (box[3] - box[1])
-            waste_area += box_area
-            print(f"Waste area: {waste_area}")
-        else:
-            box_area = (box[2] - box[0]) * (box[3] - box[1])
-            total_food_area += box_area
-            print(f"Food area: {total_food_area}")
-
-    waste_percentage = (
-        (waste_area / total_food_area) * 100 if total_food_area > 0 else 0
-    )
-
-    print(f"Waste percentage: {waste_percentage}")
+    waste_percentage = 100 if waste_percentage > 100 else waste_percentage
+    waste_percentage = 0 if waste_percentage < 0 else waste_percentage
 
     return JSONResponse(
         content={

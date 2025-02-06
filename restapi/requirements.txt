@@ -7,3 +7,4 @@ numpy
 ultralytics
 uvicorn
 gunicorn
+opencv-python-headless
