@@ -49,10 +49,6 @@
     toast.success('The image was successfuly processed!');
     isLoading = false;
   }
-
-  function toggleSegmentation() {
-    returnBoundingBoxes = !returnBoundingBoxes;
-  }
 </script>
 
 <Toaster richColors />
