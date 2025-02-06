@@ -87,7 +87,7 @@
       <!-- Imagem -->
       <div class="w-[23rem] h-[30rem]">
         {#if imageBase64}
-          <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" />
+          <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" class="w-[23rem] h-[30rem]"/>
         {/if}
       </div>
     {/if}

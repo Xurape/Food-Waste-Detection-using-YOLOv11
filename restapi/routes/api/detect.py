@@ -52,7 +52,14 @@ async def detect_objects(file: UploadFile = File(...)):
     print(f"Food area: {food_area}")
 
     if plate_area > garbage_area:
-        waste_percentage = ((food_area - garbage_area) / plate_area * 0.8) * 100
+        # formula nº 1 | Results:
+        # (dir 7): 64.66% | 84.82% | 47.42% | 24.36%
+        # waste_percentage = ((food_area - garbage_area) / plate_area * 0.8) * 100
+
+        # formula nº 2 | Results
+        # (dir 7): 100% | 100% | 100% | 72.12%
+        # conclusion: formula nº 2 has better accuracy
+        waste_percentage = (food_area / (plate_area - garbage_area)) * 100
     else:
         waste_percentage = 0
 
