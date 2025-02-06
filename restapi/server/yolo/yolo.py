@@ -23,14 +23,20 @@ class YOLOModel:
                 results = self.model(frame)
             detected_objects = []
             for result in results:
-                for box in result.boxes:
+                for i, (mask, box) in enumerate(
+                    zip(result.masks.data, result.boxes)
+                ):  # Iterate through masks and boxes together
+                    area = mask.sum().item()  # Calculate area for THIS mask
+
                     detected_objects.append(
                         {
                             "label": box.cls.item(),
                             "confidence": box.conf.item(),
                             "box": box.xyxy.tolist(),
+                            "area": area,
                         }
                     )
+
             return detected_objects, results
         except Exception as e:
             print(f"Error predicting: {e}")
