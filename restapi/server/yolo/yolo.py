@@ -23,10 +23,8 @@ class YOLOModel:
                 results = self.model(frame)
             detected_objects = []
             for result in results:
-                for i, (mask, box) in enumerate(
-                    zip(result.masks.data, result.boxes)
-                ):  # Iterate through masks and boxes together
-                    area = mask.sum().item()  # Calculate area for THIS mask
+                for i, (mask, box) in enumerate(zip(result.masks.data, result.boxes)):
+                    area = mask.sum().item()
 
                     detected_objects.append(
                         {
