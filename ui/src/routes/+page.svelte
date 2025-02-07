@@ -7,6 +7,7 @@
   import { Toaster } from "$lib/components/ui/sonner";
 	import { toast } from "svelte-sonner";
   import spinner from '$lib/assets/image/loading.svg';
+  import { onMount } from 'svelte';
 
   // - form data - //
   let imageFile: File | null = null;
@@ -15,13 +16,17 @@
   let wastePercentage = 0;
   let wastePercentageColor = '';
   let isLoading = false;
-  let currentCommit = getCommitHash() || 'loading...';
+  let currentCommit = 'loading...';
 
   async function getCommitHash() {
     const response = await fetch('https://api.github.com/repos/Xurape/PROJ3-FWD/commits');
     const data = await response.json();
     return data[0].sha;
   }
+
+  onMount(async () => {
+    currentCommit = await getCommitHash();
+  });
 
   // - functions - //
   async function handleSubmit(event: Event) {
@@ -34,8 +39,8 @@
 
     toast.loading('Processing image...');
 
-    // const response = await fetch(`https://jr3-api.joaopferreira.me/api/detect`, {
-    const response = await fetch(`http://localhost:8000/api/detect`, {
+    const response = await fetch(`https://jr3-api.joaopferreira.me/api/detect`, {
+    // const response = await fetch(`http://localhost:8000/api/detect`, {
       method: 'POST',
       body: formData
     });
