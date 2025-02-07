@@ -15,12 +15,12 @@
   let wastePercentage = 0;
   let wastePercentageColor = '';
   let isLoading = false;
-  let currentCommit = getCommitHash();
+  let currentCommit = getCommitHash() || 'loading...';
 
   async function getCommitHash() {
     const response = await fetch('https://api.github.com/repos/Xurape/PROJ3-FWD/commits');
     const data = await response.json();
-    currentCommit = data[0].sha;
+    return data[0].sha;
   }
 
   // - functions - //
