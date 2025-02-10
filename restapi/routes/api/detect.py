@@ -41,7 +41,7 @@ async def detect_objects(file: UploadFile = File(...)):
     # Calculate waste percentage
     # fork, garbage, knife, spoon,             [cup, cup, cup], chips, bread, board
     garbage_classes = {35.0}
-    ignore_classes = {32.0, 42.0, 70.0, 83.0, 25.0, 27.0, 22.0, 11.0, 8.0}
+    ignore_classes = {58.0, 31.0, 42.0, 70.0, 83.0, 25.0, 27.0, 22.0, 11.0, 8.0}
     plate_area = 0
     garbage_area = 0
     food_area = 0
@@ -53,11 +53,7 @@ async def detect_objects(file: UploadFile = File(...)):
         if obj["label"] in garbage_classes:
             garbage_area += obj["area"]
 
-        if (
-            obj["label"] not in garbage_classes
-            and obj["label"] != 58.0
-            and obj["label"] not in ignore_classes
-        ):
+        if obj["label"] not in garbage_classes and obj["label"] not in ignore_classes:
             food_area += obj["area"]
 
     if plate_area == 0:

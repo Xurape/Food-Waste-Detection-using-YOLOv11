@@ -52,6 +52,14 @@
 
     const data = await response.json();
     if (response.status !== 200) {
+      detectedObjects = [];
+      imageBase64 = '';
+      clusteringImageBase64 = '';
+      wastePercentage = 0;
+      food_area = 0;
+      plate_area = 0;
+      garbage_area = 0;
+
       toast.error(data.error || 'An error occurred while processing the image.');
       isLoading = false;
       return;
