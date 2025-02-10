@@ -18,9 +18,9 @@
   let clusteringImageBase64 = '';
   let wastePercentage = 0;
   let wastePercentageColor = '';
-  let food_area;
-  let plate_area;
-  let garbage_area;
+  let food_area = 0;
+  let plate_area = 0;
+  let garbage_area = 0;
   let isLoading = false;
   let currentCommit = 'loading...';
 
@@ -87,10 +87,10 @@
 
   // - math - //
   $: formula = `W = \\frac{\\text{FoodArea}}{\\text{PlateArea} - \\text{GarbageArea}} \\times 100`;
-  $: currentFormula = food_area && plate_area && garbage_area 
+  $: currentFormula = food_area && plate_area
     ? `W = \\frac{${food_area.toFixed(2)}}{${plate_area.toFixed(2)} - ${garbage_area.toFixed(2)}} \\times 100`
     : formula;
-  $: combinedFormula = food_area && plate_area && garbage_area 
+  $: combinedFormula = food_area && plate_area 
     ? `W = \\frac{\\text{FoodArea}}{\\text{PlateArea} - \\text{GarbageArea}} \\times 100 = \\frac{${food_area.toFixed(2)}}{${plate_area.toFixed(2)} - ${garbage_area.toFixed(2)}} \\times 100 = ${wastePercentage.toFixed(2)}`
     : formula;
 </script>
@@ -167,11 +167,11 @@
           <div class="flex flex-row gap-5">
             <Math t={formula} />
           </div>
-          {#if food_area && plate_area && garbage_area}
+          {#if food_area && plate_area}
             <p class="text-gray-200"><span class="text-red-700">Formula used to determine current Waste (%):</span></p>
             <Math t={combinedFormula} />
           {/if}
-      </div>
+        </div>
       </Tabs.Content>
     </Tabs.Root>
   </div>
