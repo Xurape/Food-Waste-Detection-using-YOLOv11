@@ -51,6 +51,12 @@
     });
 
     const data = await response.json();
+    if (response.status !== 200) {
+      toast.error(data.error || 'An error occurred while processing the image.');
+      isLoading = false;
+      return;
+    }
+
     detectedObjects = data.objects;
     imageBase64 = data.image_base64;
     clusteringImageBase64 = data.clustering_image_base64;
@@ -67,7 +73,7 @@
       wastePercentageColor = 'red';
     }
 
-    toast.success('The image was successfuly processed!');
+    toast.success('The image was successfully processed!');
     isLoading = false;
   }
 
@@ -125,10 +131,16 @@
             <!-- Imagem -->
             <div class="mb-4 flex flex-col md:flex-row gap-2">
               {#if imageBase64}
-                <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" class="w-[23rem] h-[30rem]"/>
+                <div class="flex flex-col gap-2">
+                  <h2 class="font-bold hidden md:block">Detected Image</h2>
+                  <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" class="w-[23rem] h-[30rem]"/>
+                </div>
               {/if}
               {#if clusteringImageBase64}
-                <img src={`data:image/jpeg;base64,${clusteringImageBase64}`} alt="Clustering Image" class="w-[23rem] h-[30rem]"/>
+                <div class="flex flex-col gap-2">
+                  <h2 class="font-bold hidden md:block">Clustering Image</h2>
+                  <img src={`data:image/jpeg;base64,${clusteringImageBase64}`} alt="Clustering Image" class="w-[23rem] h-[30rem]"/>
+                </div>
               {/if}
             </div>
           {/if}
