@@ -15,6 +15,7 @@
   let imageFile: File | null = null;
   let detectedObjects: any[] = [];
   let imageBase64 = '';
+  let clusteringImageBase64 = '';
   let wastePercentage = 0;
   let wastePercentageColor = '';
   let food_area;
@@ -44,7 +45,6 @@
 
     toast.loading('Processing image...');
 
-    // const response = await fetch(`https://jr3-api.joaopferreira.me/api/detect`, {
     const response = await fetch(`http://localhost:8000/api/detect`, {
       method: 'POST',
       body: formData
@@ -53,6 +53,7 @@
     const data = await response.json();
     detectedObjects = data.objects;
     imageBase64 = data.image_base64;
+    clusteringImageBase64 = data.clustering_image_base64;
     wastePercentage = data.waste_percentage;
     food_area = data.food_area;
     plate_area = data.plate_area;
@@ -126,6 +127,9 @@
               {#if imageBase64}
                 <img src={`data:image/jpeg;base64,${imageBase64}`} alt="Detected Image" class="w-[23rem] h-[30rem]"/>
               {/if}
+              {#if clusteringImageBase64}
+                <img src={`data:image/jpeg;base64,${clusteringImageBase64}`} alt="Clustering Image" class="w-[23rem] h-[30rem]"/>
+              {/if}
             </div>
           {/if}
         </div> 
@@ -137,6 +141,7 @@
             <li>- The waste (%) is the area of the objects (food) except the utensils and the garbage.</li>
             <li>- The waste (%) is 100% when the plate has the max amount of food.</li>
             <li>- Garbage is qualified as a type of food or object that cannot be eaten.</li>
+            <li>- Every variable on the formula is calculated in Pixels</li>
           </ul>
           <p class="text-gray-200"><span class="text-red-700">Formula:</span></p>
           <div class="flex flex-row gap-5">
