@@ -45,7 +45,7 @@
 
     toast.loading('Processing image...');
 
-    const response = await fetch(`http://localhost:8000/api/detect`, {
+    const response = await fetch(`https://jr3-api.joaopferreira.me/api/detect`, {
       method: 'POST',
       body: formData
     });
