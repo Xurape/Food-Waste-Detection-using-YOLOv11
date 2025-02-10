@@ -30,7 +30,9 @@ async def detect_objects(file: UploadFile = File(...)):
         base64_image = base64.b64encode(image_file.read()).decode("utf-8")
 
     # Calculate waste percentage
-    garbage_classes = {35.0, 31.0, 42.0}
+    # 70 - spoon
+    # 31 - fork
+    garbage_classes = {35.0, 31.0, 42.0, 70.0}
 
     plate_area = 0
     garbage_area = 0
@@ -71,5 +73,8 @@ async def detect_objects(file: UploadFile = File(...)):
             "objects": detected_objects,
             "image_base64": base64_image,
             "waste_percentage": waste_percentage,
+            "food_area": food_area,
+            "garbage_area": garbage_area,
+            "plate_area": plate_area,
         }
     )

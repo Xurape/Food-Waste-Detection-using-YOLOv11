@@ -43,6 +43,8 @@
 		"vite": "^6.0.0"
 	},
 	"dependencies": {
-		"lucide-svelte": "^0.474.0"
+		"lucide-svelte": "^0.474.0",
+		"mathjax-full": "3",
+		"mathjax-svelte": "^0.0.2"
 	}
 }

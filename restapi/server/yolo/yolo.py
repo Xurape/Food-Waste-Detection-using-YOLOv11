@@ -23,11 +23,13 @@ class YOLOModel:
                 results = self.model(frame)
             detected_objects = []
             for result in results:
+                print(result)
                 for i, (mask, box) in enumerate(zip(result.masks.data, result.boxes)):
                     area = mask.sum().item()
                     detected_objects.append(
                         {
                             "label": box.cls.item(),
+                            "label_name": result.names[box.cls.item()],
                             "confidence": box.conf.item(),
                             "box": box.xyxy.tolist(),
                             "area": area,
