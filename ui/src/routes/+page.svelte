@@ -30,9 +30,10 @@
     return data[0].sha;
   }
 
-  onMount(async () => {
-    currentCommit = await getCommitHash();
-  });
+  // to use later
+  //onMount(async () => {
+    //currentCommit = await getCommitHash();
+  //});
 
   // - functions - //
   async function handleSubmit(event: Event) {
@@ -179,6 +180,8 @@
   <div id="footer" class="absolute flex flex-col gap-1 bottom-6 md:bottom-5 w-full text-center text-xs text-gray-500">
     <p class="text-gray-200"><span class="text-red-700">NOTE:</span> Considering the waste (%) as the area of the objects (food) except the utensils and the garbage. The waste (%) is 100% when the plate have the max amount of food.<br/>
     Garbage is qualified as a type of food or object that cannot be eaten.</p>
+    <!--
     <p>current git commit: <a href={"https://github.com/xurape/PROJ3-FWD/commit/" + currentCommit} target="_blank" rel="nofollow" class="text-yellow-600 underline">{currentCommit}</a></p>
+    -->
   </div>
 </div>
