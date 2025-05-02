@@ -9,6 +9,9 @@ The three authors of this article are from the Polytechnic Institute Of Viana do
 - All the documentation for the UI is [here](./ui/README.md)
 - All the documentation for the backend is [here](./restapi/README.md)
 
+# Dataset
+The dataset for this project is also publicly available at: https://universe.roboflow.com/project-eyfif/proj3-food-waste-detection
+
 ## Start the project
 To start the project, you need to have docker and docker-compose installed on your machine. Then, you can run the following command:
 ```bash
