@@ -21,11 +21,12 @@ pyenv exec pip install uv
 ```bash
 pyenv exec uv pip install -r requirements.txt --system
 ```
-6. Start the server
+6. Get the pre-built model (the .pt file) from the releases section https://github.com/Xurape/PROJ3-FWD/releases/latest/ and put it into the `/restapi/server/yolo/weights/` directory (Create it if it doesn't exist)
+7. Start the server
 ```bash
 pyenv exec fastapi dev main.py
 ```
-1. Access via browser: http://localhost:8000
+8. Access via browser: http://localhost:8000
 
 > [!TIP]
 > To acess the **API documentation**, enter http://localhost:8000/docs or http://localhost:8000/redoc via browser.
