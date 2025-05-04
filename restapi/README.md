@@ -21,7 +21,7 @@ pyenv exec pip install uv
 ```bash
 pyenv exec uv pip install -r requirements.txt --system
 ```
-6. Get the pre-built model (the .pt file) from the releases section https://github.com/Xurape/PROJ3-FWD/releases/latest/ and put it into the `/restapi/server/yolo/weights/` directory (Create it if it doesn't exist)
+6. Get the pre-built model (the .pt file) from the releases section https://github.com/Xurape/Food-Waste-Detection-using-YOLOv11/releases/latest/ and put it into the `/restapi/server/yolo/weights/` directory (Create it if it doesn't exist)
 7. Start the server
 ```bash
 pyenv exec fastapi dev main.py
